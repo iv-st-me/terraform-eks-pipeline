@@ -22,7 +22,7 @@ public_subnet_tier_name          = "public"
 private_subnet_tags              = {}
 private_subnet_tier_name         = "private"
 eks_cluster_resource_prefix      = "eksdev"
-eks_cluster_tier_name            = "masterdev"
+eks_cluster_tier_name            = "" #=eks_master_tier_name
 data_subnet_tags                 = {}
 data_subnet_tier_name            = "data"
 db_subnet_group_resource_prefix  = "sngdev"
