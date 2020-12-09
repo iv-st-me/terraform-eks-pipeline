@@ -4,7 +4,7 @@ account_id = "235297331187"
 
 # Global
 common_region       = "eu-central-1"
-vpc_resource_prefix = "vpc"
+vpc_resource_prefix = "vpcdev"
 common_tags = {
   Terraform = "true",
   Team      = "myteam"

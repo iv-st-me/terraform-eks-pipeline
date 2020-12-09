@@ -42,25 +42,22 @@ module "pipelinebuild_iam_role" {
 }
 
 module "pipeline_build_terraform" {
-  depends_on = [aws_s3_bucket.terraform_lock, aws_dynamodb_table.terraform_lock]
-  source     = "../../../modules/aws/codepipeline/no_approval"
+  source = "../../../modules/aws/codepipeline/no_approval"
 
-  pipeline_resource_prefix       = var.pipeline_resource_prefix
-  environment_name               = var.environment_name
-  pipeline_tier_name             = var.pipeline_tier_name
-  approval                       = var.approval
-  pipeline_role_arn              = module.pipeline_iam_role.arn
-  pipelinebuild_role_arn         = module.pipelinebuild_iam_role.arn
-  template_file_buildspec        = ""
-  pipeline_s3_bucket             = var.pipeline_s3_bucket
-  github_repo_owner              = var.github_repo_owner
-  github_repo                    = var.github_repo
-  github_repo_branch             = var.github_repo_branch
-  github_repo_oauth_token        = textdecodebase64(var.github_repo_oauth_token, "UTF-8")
-  pipelinebuild_build_template   = var.pipelinebuild_build_template
-  pipelinebuild_build_template_1 = var.pipelinebuild_build_template_1
-  pipelinebuild_build_template_2 = var.pipelinebuild_build_template_2
-  common_tags                    = var.common_tags
-  pipeline_tags                  = var.pipeline_tags
+  pipeline_resource_prefix     = var.pipeline_resource_prefix
+  environment_name             = var.environment_name
+  pipeline_tier_name           = var.pipeline_tier_name
+  approval                     = var.approval
+  pipeline_role_arn            = module.pipeline_iam_role.arn
+  pipelinebuild_role_arn       = module.pipelinebuild_iam_role.arn
+  template_file_buildspec      = ""
+  pipeline_s3_bucket           = var.pipeline_s3_bucket
+  github_repo_owner            = var.github_repo_owner
+  github_repo                  = var.github_repo
+  github_repo_branch           = var.github_repo_branch
+  github_repo_oauth_token      = textdecodebase64(var.github_repo_oauth_token, "UTF-8")
+  pipelinebuild_build_template = var.pipelinebuild_build_template
+  common_tags                  = var.common_tags
+  pipeline_tags                = var.pipeline_tags
 
 }

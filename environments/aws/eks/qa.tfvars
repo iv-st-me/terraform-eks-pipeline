@@ -4,29 +4,29 @@ account_id = "235297331187"
 
 # Global
 common_region       = "eu-central-1"
-vpc_resource_prefix = "vpc"
+vpc_resource_prefix = "vpcqa"
 common_tags = {
   Terraform = "true",
   Team      = "myteam"
 }
 
-subnet_resource_prefix                     = "net"
+subnet_resource_prefix                     = "netqa"
 private_subnet_tier_name                   = "private"
-eks_cluster_resource_prefix                = "eks"
+eks_cluster_resource_prefix                = "eksqa"
 terraform_assume_role_name                 = ""
-iam_policy_resource_prefix                 = "eksiampolicy"
+iam_policy_resource_prefix                 = "eksqa"
 environment_name                           = "shared"
 eks_master_tier_name                       = ""
 eks_master_iam_role_policy_path            = ""
-iam_role_resource_prefix                   = "eksiamrole"
+iam_role_resource_prefix                   = "eksqa"
 eks_master_iam_role_path                   = "/"
 eks_master_iam_role_max_session_duration   = 7200 # seconds
 eks_master_iam_role_permissions_boundary   = ""
 eks_master_iam_role_tags                   = {}
 eks_master_kms_key_deletion_window_in_days = 7
 kms_key_tags                               = {}
-kms_key_resource_prefix                    = "ekskms"
-security_group_resource_prefix             = "ekssg"
+kms_key_resource_prefix                    = "eksqa"
+security_group_resource_prefix             = "eksqa"
 security_group_tags                        = {}
 # eks_master_security_group_custom_ingress_rules = [
 #   {
@@ -54,7 +54,7 @@ eks_master_security_group_custom_ingress_rules = []
 # ]
 eks_master_security_group_custom_egress_rules = []
 
-eks_node_group_resource_prefix                 = "eksnode"
+eks_node_group_resource_prefix                 = "eksnodeqa"
 eks_cluster_enabled_log_types                  = []
 eks_cluster_version                            = "1.18" #1.18, 1.17, 1.16, 1.15, 1.14
 eks_cluster_tags                               = {}
