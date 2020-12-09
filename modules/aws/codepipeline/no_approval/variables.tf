@@ -63,6 +63,16 @@ variable "pipelinebuild_build_template" {
   description = "String of YAML buildspec file containing the Pipeline build. Note that indenation must be preserved due to YAML sytax and new line is \n"
 }
 
+variable "pipelinebuild_build_template_1" {
+  type        = string
+  description = "String of YAML buildspec file containing the Pipeline build. Note that indenation must be preserved due to YAML sytax and new line is \n"
+}
+
+variable "pipelinebuild_build_template_2" {
+  type        = string
+  description = "String of YAML buildspec file containing the Pipeline build. Note that indenation must be preserved due to YAML sytax and new line is \n"
+}
+
 variable "common_tags" {
   type        = map(string)
   description = "Map of tags to assign to resources"

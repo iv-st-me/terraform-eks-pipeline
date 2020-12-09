@@ -50,6 +50,7 @@ resource "aws_codepipeline" "this" {
 }
 
 resource "aws_codebuild_project" "this" {
+  # depends_on = [aws_codebuild_project.vpcnet]
   name = format(
     "%s-%s-%s-%s",
     lower(var.pipeline_resource_prefix),
@@ -59,7 +60,7 @@ resource "aws_codebuild_project" "this" {
   )
   description = "${var.environment_name}_codebuild_project"
 
-  build_timeout = "7"
+  build_timeout = "20"
   service_role  = var.pipelinebuild_role_arn
 
   artifacts {
