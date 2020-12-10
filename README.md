@@ -18,6 +18,10 @@ This is a sample Terraform code to deploy AWS Elastic Kubernetes Service cluster
 Clone the repository
 
 ```shell
+git clone https://github.com/iv-st-me/terraform-eks-pipeline.git
+```
+
+```shell
 cd terraform-eks-pipeline
 ```
 
@@ -50,20 +54,20 @@ That's it!
 **Please note that it will install new CodePipeline and will kick in automatically Deployment of:**
 - VPC
 - Networking: 3 Availability zones, 3 Networks, NAT GWs, Security Groups, Routing Tables, EIPs
-- EKS: Based on the configuration it will install Kubernetes cluster with multiple worker nodes as per configuration
+- EKS: Based on the configuration it will install Kubernetes cluster with multiple Worker nodes as per configuration
 
 The deployment is based in the configuration files:
 environments/aws/network/dev.tfvars (or qa.tfvars, or ...)
 environments/aws/eks/dev.tfvars (or qa.tfvars, or ...)
 
-## Inplementation
+## Implementation
 
 The Terraform implementation is structured in three main concepts: Environments, Modules and Services
 
 Environment is a configuration definition of multiple services and their environments. The current structure is service/environment but it can be environment/service. It is only a logical folder structure and is used by terraform by adding "-var-file=../../../environments/aws/[service]/[environment].tfvars"
 
 Module is a group of resources related to the setup environment. Each Module:
-- installs different Terraform resources
+- installs different Terraform resource
 - abstracts complexity
 - does one task
 - not executed by Terraform commands but called from a Service
@@ -71,11 +75,11 @@ Module is a group of resources related to the setup environment. Each Module:
 Service is a collection of logically connected Modules. Each Service is:
 
 - global or region specific
-- it can use one or multiple nodes or additional resources
+- it can use one or multiple Modules or additional resources
 
 ## State files
 
-Solution utilises shared Terraform state stored in AWS S3 and shared state locking stored in Dynamo DB.
+Solution utilises shared Terraform state stored in AWS S3, and shared state locking stored in Dynamo DB.
 
 Configuration is happening during init process and the config is in file backend.config with sample content:
 ```shell
@@ -88,10 +92,12 @@ dynamodb_table       = "terraform_state_lock"
 ```
 
 Working with different Environments and saving/sharing their state is done with using Terraform Workspace:
+```shell
 terraform workspace new prod
-will create prod environment and will create new folder structure in the S3 bucket. Using upper example it will be: environment/prod/vpcnet/tf-state.json
+```
+that will create **prod** environment and will create new folder structure in the S3 bucket. Using upper backend.config example it will be: environment/prod/vpcnet/tf-state.json
 
-During Terraform updates DynamoDB state locking will be used using the table from the same configuration.
+During Terraform updates DynamoDB state locking will be used using the table from the same configuration file.
 
 ## Pipeline
 
@@ -100,7 +106,7 @@ Solution utilises AWS CodePipeline service with 2 stages that can be extended as
 * Invoke Terraform Build
 
 After Pipeline is deployed it starts to monitor the used GitHub branch and if there is new commit to the branch, it automatically kicks in new deployment. So any change in the configuration will be automatically reflected in the deployment.
-After Pipeline is deployed there is near zero or zero maintenance, as all the settings and features are in the code repository. After new feature or configuration is added it is automatically deployed by the Pipeline.
+After Pipeline is deployed there is near zero or zero maintenance, as all the settings and features are in the code repository. After new feature or configuration is added, it is automatically deployed by the Pipeline.
 
 Additional stages like Test and Approval can be easily added by extending the Pipeline module.
 
@@ -113,7 +119,7 @@ For great flexibility, using different GitHub code repository branches are in th
 
 Great flexibility is achieved with combining different configurations for different environments and different features set:
 
-1. Different code that is in different branches could be deployed in every deployment
+1. Different code that is in different branch could be deployed in every deployment
 2. Every selected code branch from point 1 could be deployed in different Environment
 3. Every specified feature-set configuration (from configuration files) could be deployed in any combination from point 1 and point 2
 
@@ -121,10 +127,10 @@ Great flexibility is achieved with combining different configurations for differ
 
 This is a sample implementation and is for testing purposes. In order to make it ready for Production multiple things must be added:
 
-* Account strategy - Landing zone. Domain Controller of Identity federation with Account grouping. Restricting access of accounts for example normal account should not be able to create IGW/NATGW resources
+* Account strategy - Landing zones. Domain Controller of Identity federation with Account grouping. Restricting access of accounts for example normal account should not be able to create IGW/NATGW resources
 
-* Networking - Transit Gateway as central connectivity and traffic inspection point. Possible utilisation of Transit VPC with Application Firewall. Default GW is only via Transit GW/Transit VPC - All Ingress/Egress is engineered and controlled in the Transit VPC
+* Networking - Transit Gateway as central connectivity and traffic engineering point. Possible utilisation of Transit VPC with Application Firewall. Default GW is only via Transit GW/Transit VPC - all Ingress/Egress is engineered and controlled in the Transit VPC
 
 * Security - Security configurations must be in a code repository with CI/CD. All VPC, instances and Application logs should be collected in a separate SIEM VPC with log archiving.
 
-* Jenkins Pipeline, AWS CodePipeline or GitLab for CD/CI/CS
+* Jenkins Pipeline, AWS CodePipeline or GitLab for CD/CI/CD/CS

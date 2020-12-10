@@ -126,6 +126,8 @@ module "eks_worker_security_group" {
 module "eks_master_node_group" {
   source = "../../../modules/aws/compute/eks/node_group"
 
+  depends_on = [module.eks_master_instances]
+
   eks_cluster_resource_prefix    = var.eks_cluster_resource_prefix
   environment_name               = var.environment_name
   eks_cluster_tier_name          = var.eks_master_tier_name
