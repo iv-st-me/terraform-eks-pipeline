@@ -78,12 +78,14 @@ Service is a collection of logically connected Modules. Each Service is:
 Solution utilises shared Terraform state stored in AWS S3 and shared state locking stored in Dynamo DB.
 
 Configuration is happening during init process and the config is in file backend.config with sample content:
+```shell
 bucket               = "terraform-eks-pipeline"
 encrypt              = true
 key                  = "vpcnet/tf-state.json"
 region               = "eu-central-1"
 workspace_key_prefix = "environment"
 dynamodb_table       = "terraform_state_lock"
+```
 
 Working with different Environments and saving/sharing their state is done with using Terraform Workspace:
 terraform workspace new prod
